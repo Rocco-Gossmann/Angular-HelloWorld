@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1687836347718,
+  "timestamp": 1687836856347,
   "index": "/Angular-HelloWorld/index.html",
   "assetGroups": [
     {
@@ -52,7 +52,7 @@
     "/Angular-HelloWorld/assets/icons/icon-72x72.png": "279825a1ac4377032ae996a1832c641e33ccf1b6",
     "/Angular-HelloWorld/assets/icons/icon-96x96.png": "592885efcbfee27e5e20be4fa3043589390d2740",
     "/Angular-HelloWorld/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/Angular-HelloWorld/index.html": "6975346353e24c613f9cb22e58d353ef6bef03ed",
+    "/Angular-HelloWorld/index.html": "3fa21e5b38b732daa5507a5d01f9db9ee3290fe5",
     "/Angular-HelloWorld/main.fa65b2cfe9e15f3a.js": "6d0e4c0783252015776c622fc511429d763e1476",
     "/Angular-HelloWorld/manifest.webmanifest": "5741b8ef780a6f8bdf02494b1e17659075c5d34c",
     "/Angular-HelloWorld/polyfills.719b3b976461f2db.js": "a14309eafbdbff8b53bc4a60c54f5613a2d2d4f6",
