@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+@import './assets/vendor/picocss/pico.min.css';
+
+:root {
+  --app-padding-inline: .5rem;
+
+}
+
+
+HTML {
+  background-color: var(--background-color);
+}
+
+H2 {
+  padding: 0px;
+  margin: 0px;
+}
+
+NAV.headline {
+  --nav-element-spacing-horizontal: 0px !important;
+  --nav-link-spacing-horizontal: 0px !important;
+  padding-inline: var(--app-padding-inline);
+}
+
+A[target=_blank] {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNqEkIEJwCAMBGPpEs7hHK6hY+gauoZr6Bo6RtqEWkxb6EMQnuM/USEirIoxSmOKwDkhBEwp4VPkb4801Xun9xW4e+9FldYarLUvkBPPOp4JGWOgtSaSt6VWQKUU9nPOEiSIgAmNMdadFTjn7utqrXwh6fLvH9nXhamW5ksMnpfDnw4BBgBfunO056MmqAAAAABJRU5ErkJggg==);
+    background-position: center right;
+    background-repeat: no-repeat;
+    padding-right: .75em;
+}
+
