@@ -2,3 +2,4 @@ docs
 *.*.map
 workspace.tmux
 build.sh
+src/assets

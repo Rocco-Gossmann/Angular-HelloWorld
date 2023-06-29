@@ -1,0 +1,10 @@
+
+
+  <h4> {{ todoList.size }} Todos</h4>
+
+  <article *ngFor="let item of todoList;" [ngClass]="{'done': item.done}">
+    <input type="checkbox" />
+     {{item.description}}
+  </article>
+
+

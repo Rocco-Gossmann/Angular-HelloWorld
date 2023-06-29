@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1687925704237,
+  "timestamp": 1688013531097,
   "index": "/Angular-HelloWorld/index.html",
   "assetGroups": [
     {
@@ -13,11 +13,11 @@
       "urls": [
         "/Angular-HelloWorld/favicon.ico",
         "/Angular-HelloWorld/index.html",
-        "/Angular-HelloWorld/main.8ca24ed99b6b96d4.js",
+        "/Angular-HelloWorld/main.94df18575251358d.js",
         "/Angular-HelloWorld/manifest.webmanifest",
         "/Angular-HelloWorld/polyfills.719b3b976461f2db.js",
         "/Angular-HelloWorld/runtime.9662dc8ff1895939.js",
-        "/Angular-HelloWorld/styles.128e0b2e5d685cb9.css"
+        "/Angular-HelloWorld/styles.4f1837b278416997.css"
       ],
       "patterns": []
     },
@@ -37,8 +37,23 @@
         "/Angular-HelloWorld/assets/icons/icon-512x512.png",
         "/Angular-HelloWorld/assets/icons/icon-72x72.png",
         "/Angular-HelloWorld/assets/icons/icon-96x96.png",
-        "/Angular-HelloWorld/assets/vendor/picocss/pico.min.css",
-        "/Angular-HelloWorld/assets/vendor/picocss/pico.min.css.map"
+        "/Angular-HelloWorld/assets/vendor/fontawesome/css/all.min.css",
+        "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-brands-400.ttf",
+        "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-brands-400.woff2",
+        "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-regular-400.ttf",
+        "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-regular-400.woff2",
+        "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-solid-900.ttf",
+        "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-solid-900.woff2",
+        "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-v4compatibility.ttf",
+        "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-v4compatibility.woff2",
+        "/Angular-HelloWorld/fa-brands-400.7fa789ab57acb632.ttf",
+        "/Angular-HelloWorld/fa-brands-400.859fc3887485de84.woff2",
+        "/Angular-HelloWorld/fa-regular-400.2ffd018f0eda6f7b.woff2",
+        "/Angular-HelloWorld/fa-regular-400.da02cb7e372f16a2.ttf",
+        "/Angular-HelloWorld/fa-solid-900.3a463ec33b4fe9f7.ttf",
+        "/Angular-HelloWorld/fa-solid-900.40ddefd79fe7af45.woff2",
+        "/Angular-HelloWorld/fa-v4compatibility.924588dc97e66b08.ttf",
+        "/Angular-HelloWorld/fa-v4compatibility.ee06c6f803f379bb.woff2"
       ],
       "patterns": []
     }
@@ -53,15 +68,30 @@
     "/Angular-HelloWorld/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
     "/Angular-HelloWorld/assets/icons/icon-72x72.png": "279825a1ac4377032ae996a1832c641e33ccf1b6",
     "/Angular-HelloWorld/assets/icons/icon-96x96.png": "592885efcbfee27e5e20be4fa3043589390d2740",
-    "/Angular-HelloWorld/assets/vendor/picocss/pico.min.css": "c04a0b169caa586866ec53458583df99139e0cb6",
-    "/Angular-HelloWorld/assets/vendor/picocss/pico.min.css.map": "8bac97a0a3a024b5cf8b3b14f76452bb90442aa3",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/css/all.min.css": "09102cfc60efb430a25ee97cee9a6a35df6dfc59",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-brands-400.ttf": "acc07d5e1ab5b96b23fabb53b1f4e416c7c0a46d",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-brands-400.woff2": "a280ecdddd14695fad22599301ab03adfe5224c0",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-regular-400.ttf": "a14023c43173628d93858c0f3fc90cf54b18a28e",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-regular-400.woff2": "379ca48f70f3d4f79f8bf1079881c7c5af4f44a4",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-solid-900.ttf": "9225d6cb428fce41704cab29b8bb43b76c67f8b4",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-solid-900.woff2": "2717f3f58271f2f2e6120d9937c7227002656d34",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-v4compatibility.ttf": "e688e02012b9e5269a09809b0d666edc87527cb2",
+    "/Angular-HelloWorld/assets/vendor/fontawesome/webfonts/fa-v4compatibility.woff2": "951ded71094a52e249ac52799fac7cbb68368270",
+    "/Angular-HelloWorld/fa-brands-400.7fa789ab57acb632.ttf": "acc07d5e1ab5b96b23fabb53b1f4e416c7c0a46d",
+    "/Angular-HelloWorld/fa-brands-400.859fc3887485de84.woff2": "a280ecdddd14695fad22599301ab03adfe5224c0",
+    "/Angular-HelloWorld/fa-regular-400.2ffd018f0eda6f7b.woff2": "379ca48f70f3d4f79f8bf1079881c7c5af4f44a4",
+    "/Angular-HelloWorld/fa-regular-400.da02cb7e372f16a2.ttf": "a14023c43173628d93858c0f3fc90cf54b18a28e",
+    "/Angular-HelloWorld/fa-solid-900.3a463ec33b4fe9f7.ttf": "9225d6cb428fce41704cab29b8bb43b76c67f8b4",
+    "/Angular-HelloWorld/fa-solid-900.40ddefd79fe7af45.woff2": "2717f3f58271f2f2e6120d9937c7227002656d34",
+    "/Angular-HelloWorld/fa-v4compatibility.924588dc97e66b08.ttf": "e688e02012b9e5269a09809b0d666edc87527cb2",
+    "/Angular-HelloWorld/fa-v4compatibility.ee06c6f803f379bb.woff2": "951ded71094a52e249ac52799fac7cbb68368270",
     "/Angular-HelloWorld/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/Angular-HelloWorld/index.html": "0e156f0853afb6e549f799c6a1e2b2f28cfaec64",
-    "/Angular-HelloWorld/main.8ca24ed99b6b96d4.js": "5c4e39c9c695c62547d9ef121efa0f40abbfebcb",
+    "/Angular-HelloWorld/index.html": "712b7611ba731fe8d08fc5197ab76a0f7e078a06",
+    "/Angular-HelloWorld/main.94df18575251358d.js": "c161ae5db22cabf870f4ebb5214c8c1c20bde223",
     "/Angular-HelloWorld/manifest.webmanifest": "5741b8ef780a6f8bdf02494b1e17659075c5d34c",
     "/Angular-HelloWorld/polyfills.719b3b976461f2db.js": "a14309eafbdbff8b53bc4a60c54f5613a2d2d4f6",
     "/Angular-HelloWorld/runtime.9662dc8ff1895939.js": "30d6e1b21adf1cbd03dad5c3a5a64eaa5d1be594",
-    "/Angular-HelloWorld/styles.128e0b2e5d685cb9.css": "8d9e563ad837618689727e8fd31f1b1511ce84ff"
+    "/Angular-HelloWorld/styles.4f1837b278416997.css": "16f5c617cb49259f644e570a7b02f9cfbdcf2b2f"
   },
   "navigationUrls": [
     {

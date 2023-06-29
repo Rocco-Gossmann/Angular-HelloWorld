@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  padding-inline: var(--app-padding-inline);
+}
+
+ARTICLE.done {
+  text-decoration: line-through;
+  color: silver;
+}
