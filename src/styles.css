@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import './assets/vendor/picocss/pico.min.css';
+@import './vendor/picocss/pico.min.css';
 
 :root {
   --app-padding-inline: .5rem;
