@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { TodoInputComponent } from './components/todo-input/todo-input.component';
+import { TodoListEntryComponent } from './components/todo-list/todo-list-entry/todo-list-entry.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
-    TodoInputComponent
+    TodoInputComponent,
+    TodoListEntryComponent
   ],
   imports: [
     BrowserModule,

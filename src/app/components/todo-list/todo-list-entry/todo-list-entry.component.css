@@ -1,0 +1,8 @@
+ARTICLE {
+  --block-spacing-vertical: calc(var(--spacing));
+}
+
+ARTICLE.done {
+  text-decoration: line-through;
+  color: silver;
+}
