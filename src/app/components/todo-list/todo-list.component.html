@@ -1,6 +1,6 @@
   <h4> {{ todoList.size }} Todos</h4>
 
-  <app-todo-list-entry *ngFor="let item of todoList;" [todo]="item" />
+  <app-todo-list-entry *ngFor="let item of todoList;" [todo]="item" (onDone)="onTodoDone(item, $event)"/>
 
 
 

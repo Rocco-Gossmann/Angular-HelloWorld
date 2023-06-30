@@ -8,7 +8,13 @@ import { TodoData, todoManager } from '../../../data/todomanager/todomanager.mod
 })
 
 export class TodoListComponent {
+
   todoList: Set<TodoData> = todoManager.list;
+
+  onTodoDone(...args: any[]) {
+    console.log("todo has been set done", args);
+  }
+
 }
 
 

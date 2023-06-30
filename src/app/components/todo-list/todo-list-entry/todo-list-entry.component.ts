@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TodoData } from 'projects/todos/src/data/todomanager/todomanager.module';
 
 @Component({
@@ -9,11 +9,13 @@ import { TodoData } from 'projects/todos/src/data/todomanager/todomanager.module
 export class TodoListEntryComponent {
 
   @Input() todo?: TodoData
+  @Output() onDone: EventEmitter<boolean> = new EventEmitter();
 
   toggleDone() {
     if(this.todo)
       this.todo.done = !this.todo.done
-  }
 
+    this.onDone.emit(this.todo?.done);
+  }
 
 }
