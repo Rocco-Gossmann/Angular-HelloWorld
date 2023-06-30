@@ -1,10 +1,9 @@
+<form (submit)="$event.preventDefault(); onInputSubmit()">
 
-<div class="app-todo-input-container">
+  <input type="text" [value]="textInput" (input)='textInput = $any($event.target)?.value || ""' />
 
-  <input type="text" />
-
-  <button>
+  <button type="submit">
     <span class="fa fa-plus"></span>
   </button>
 
-</div>
+</form>
