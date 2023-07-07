@@ -1,21 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TodoData, todoManager } from '../../../data/todomanager/todomanager.module';
+
+import { trigger, state, style } from '@angular/animations'
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.css']
+  styleUrls: ['./todo-list.component.css'],
+  animations: [
+    trigger("listElement", [
+      state("done", style({
+        backgroundColor: "lightgreen"
+      })),
+      state("undone", style({
+        backgroundColor: "coral"
+      })),
+    ])
+  ]
 })
 
-export class TodoListComponent {
+export class TodoListComponent implements OnInit {
+
+  @ViewChild("todoList") listContainer: any
 
   todoList: Set<TodoData> = todoManager.list;
+  renderTodoList: TodoData[] =  [];
+
+  initRenderList() {
+    const arr = Array.from(this.todoList.values()).sort( 
+      (a:TodoData, b:TodoData) => (a.done > b.done) 
+        ? 1 
+        : (b.done > a.done) ? -1 : 0
+    );
+
+    this.renderTodoList = arr;
+  }
 
   onTodoDone(...args: any[]) {
     console.log("todo has been set done", args);
+    this.initRenderList(); 
   }
 
+  ngOnInit()                         : void { console.log("on init"           , this.initRenderList()) }
 }
-
-
-console.log(todoManager.list);
