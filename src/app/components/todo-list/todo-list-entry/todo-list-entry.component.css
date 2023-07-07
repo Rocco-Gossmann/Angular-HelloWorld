@@ -2,6 +2,14 @@ ARTICLE {
   --block-spacing-vertical: calc(var(--spacing));
 }
 
+::view-transition-image-pair(root) {
+  isolation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 10s;
+}
+
 ARTICLE.done {
   text-decoration: line-through;
   color: silver;

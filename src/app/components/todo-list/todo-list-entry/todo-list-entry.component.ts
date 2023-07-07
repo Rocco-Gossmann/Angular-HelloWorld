@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TodoData } from 'projects/todos/src/data/todomanager/todomanager.module';
+import { TodoData } from '../../../../data/todomanager/todomanager.module';
 
 @Component({
   selector: 'app-todo-list-entry',
   templateUrl: './todo-list-entry.component.html',
   styleUrls: ['./todo-list-entry.component.css']
 })
+
 export class TodoListEntryComponent {
 
-  @Input() todo?: TodoData
+  @Input() todo?: TodoData;
   @Output() onDone: EventEmitter<boolean> = new EventEmitter();
 
   toggleDone() {
@@ -17,5 +18,4 @@ export class TodoListEntryComponent {
 
     this.onDone.emit(this.todo?.done);
   }
-
 }

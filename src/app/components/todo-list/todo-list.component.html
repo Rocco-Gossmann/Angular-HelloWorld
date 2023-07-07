@@ -1,6 +1,8 @@
-  <h4> {{ todoList.size }} Todos</h4>
+  <h4> {{ renderTodoList.length }} Todos</h4>
 
-  <app-todo-list-entry *ngFor="let item of todoList;" [todo]="item" (onDone)="onTodoDone(item, $event)"/>
+  <div #todoList>
+    <app-todo-list-entry *ngFor="let item of renderTodoList;" [todo]="item" (onDone)="onTodoDone(item, $event)" />
+  </div>
 
 
 

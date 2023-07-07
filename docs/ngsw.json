@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1688013531097,
+  "timestamp": 1688632928447,
   "index": "/Angular-HelloWorld/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/Angular-HelloWorld/favicon.ico",
         "/Angular-HelloWorld/index.html",
-        "/Angular-HelloWorld/main.94df18575251358d.js",
+        "/Angular-HelloWorld/main.b8d230249eff3255.js",
         "/Angular-HelloWorld/manifest.webmanifest",
         "/Angular-HelloWorld/polyfills.719b3b976461f2db.js",
         "/Angular-HelloWorld/runtime.9662dc8ff1895939.js",
@@ -86,8 +86,8 @@
     "/Angular-HelloWorld/fa-v4compatibility.924588dc97e66b08.ttf": "e688e02012b9e5269a09809b0d666edc87527cb2",
     "/Angular-HelloWorld/fa-v4compatibility.ee06c6f803f379bb.woff2": "951ded71094a52e249ac52799fac7cbb68368270",
     "/Angular-HelloWorld/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/Angular-HelloWorld/index.html": "712b7611ba731fe8d08fc5197ab76a0f7e078a06",
-    "/Angular-HelloWorld/main.94df18575251358d.js": "c161ae5db22cabf870f4ebb5214c8c1c20bde223",
+    "/Angular-HelloWorld/index.html": "dbad043021288ac339b266ab2f5e808d4c86fbc0",
+    "/Angular-HelloWorld/main.b8d230249eff3255.js": "588c15b569b4b3c9885551c33783187d934ee39a",
     "/Angular-HelloWorld/manifest.webmanifest": "5741b8ef780a6f8bdf02494b1e17659075c5d34c",
     "/Angular-HelloWorld/polyfills.719b3b976461f2db.js": "a14309eafbdbff8b53bc4a60c54f5613a2d2d4f6",
     "/Angular-HelloWorld/runtime.9662dc8ff1895939.js": "30d6e1b21adf1cbd03dad5c3a5a64eaa5d1be594",
