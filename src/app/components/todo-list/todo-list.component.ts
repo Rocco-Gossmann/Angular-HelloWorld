@@ -1,22 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TodoData, todoManager } from '../../../data/todomanager/todomanager.module';
 
-import { trigger, state, style } from '@angular/animations'
-
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css'],
-  animations: [
-    trigger("listElement", [
-      state("done", style({
-        backgroundColor: "lightgreen"
-      })),
-      state("undone", style({
-        backgroundColor: "coral"
-      })),
-    ])
-  ]
 })
 
 export class TodoListComponent implements OnInit {

@@ -1,10 +1,25 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TodoData } from 'projects/todos/src/data/todomanager/todomanager.module';
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
+import { TodoData } from '../../../../data/todomanager/todomanager.module';
 
 @Component({
   selector: 'app-todo-list-entry',
   templateUrl: './todo-list-entry.component.html',
-  styleUrls: ['./todo-list-entry.component.css']
+  styleUrls: ['./todo-list-entry.component.css'],
+  animations: [
+    trigger("listElement", [
+      state("done", style({
+        backgroundColor: "lightgreen"
+      })),
+      state("undone", style({
+        backgroundColor: "coral"
+      })),
+
+      transition("done => undone", animate(".5s")),
+      transition("undone => done", animate(".5s"))
+    ])
+  ]
 })
 export class TodoListEntryComponent {
 

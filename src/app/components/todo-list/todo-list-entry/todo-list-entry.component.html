@@ -1,4 +1,4 @@
-<article *ngIf={todo} [class]="{'done': todo?.done}">
+<article *ngIf={todo} [class]="{'done': todo?.done}" [@listElement]="todo?.done ? 'done' : 'undone'">
   <input type="checkbox" (change)="toggleDone()" [checked]="todo?.done" />
    {{todo?.description}}
 </article>
