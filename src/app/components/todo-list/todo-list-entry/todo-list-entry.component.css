@@ -6,3 +6,28 @@ ARTICLE.done {
   text-decoration: line-through;
   color: silver;
 }
+
+@keyframes goout {
+  to {
+    transform: scaleY(0%);
+  }
+}
+
+@keyframes comein {
+  from {
+    transform: scaleY(0%);
+  }
+  to {
+    transform: scaleY(100%);
+  }
+}
+
+.animin {
+  background-color: lightgreen;
+  animation: .5s ease-in comein forwards;
+}
+
+.animout {
+  background-color: coral;
+  animation: .5s ease-in goout forwards;
+}

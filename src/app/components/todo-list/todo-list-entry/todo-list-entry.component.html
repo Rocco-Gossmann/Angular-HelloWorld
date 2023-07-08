@@ -1,4 +1,4 @@
-<article *ngIf={todo} [class]="{'done': todo?.done}" [@listElement]="todo?.done ? 'done' : 'undone'">
+<article #maincontainer *ngIf={todo} class="{{animclass}}" [ngClass]="{'done': todo?.done}">
   <input type="checkbox" (change)="toggleDone()" [checked]="todo?.done" />
    {{todo?.description}}
 </article>
