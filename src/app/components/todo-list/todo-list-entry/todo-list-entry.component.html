@@ -1,4 +1,7 @@
-<article #maincontainer *ngIf={todo} class="{{animclass}}" [ngClass]="{'done': todo?.done}">
+<article #maincontainer *ngIf={todo} class="{{animclass}}"
+  [ngClass]="{'done': todo?.done}"
+  [ngStyle]="{'--anim-offset-y': animStart + 'px'}"
+>
   <input type="checkbox" (change)="toggleDone()" [checked]="todo?.done" />
    {{todo?.description}}
 </article>

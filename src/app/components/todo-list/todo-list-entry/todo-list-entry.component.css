@@ -5,29 +5,24 @@ ARTICLE {
 ARTICLE.done {
   text-decoration: line-through;
   color: silver;
-}
-
-@keyframes goout {
-  to {
-    transform: scaleY(0%);
-  }
+  background-color: lightgreen;
 }
 
 @keyframes comein {
-  from {
-    transform: scaleY(0%);
-  }
-  to {
-    transform: scaleY(100%);
-  }
+  to { transform: translateY(0px); }
 }
 
 .animin {
-  background-color: lightgreen;
-  animation: .5s ease-in comein forwards;
+  transform: translateY(var(--anim-offset-y));
+  animation: .33s ease-in-out comein forwards;
 }
 
 .animout {
+  height: 0px;
+  padding: 0px;
+  margin: 0px;
+  border: none;
+
+  overflow: hidden;
   background-color: coral;
-  animation: .5s ease-in goout forwards;
 }

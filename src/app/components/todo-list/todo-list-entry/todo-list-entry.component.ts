@@ -13,27 +13,30 @@ export class TodoListEntryComponent {
   @ViewChild("maincontainer") container!: ElementRef<HTMLElement>;
 
   animclass = "";
+  offsetY = 0;
+  animStart = 0;
 
   comeInAnimation = () => {
-    console.log("come in end");
     this.container.nativeElement.removeEventListener("animationend", this.comeInAnimation);
     this.animclass = ""
-  }
-  goOutAnimation = () => {
-    console.log("go out end");
-    this.container.nativeElement.removeEventListener("animationend", this.goOutAnimation);
-    this.container.nativeElement.addEventListener("animationend", this.comeInAnimation);
-    this.animclass = "animin"
-    this.onDone.emit(this.todo?.done);
+    this.offsetY = this.animStart = 0;
   }
 
   toggleDone() {
+
     if(this.todo) {
       this.todo.done = !this.todo.done
-    }
+      this.offsetY = this.container.nativeElement.offsetTop;
+      this.animclass = "animout"
+      this.onDone.emit(this?.todo?.done);
 
-    this.container.nativeElement.addEventListener("animationend", this.goOutAnimation);
-    this.animclass = "animout"
+      window.setTimeout(() => {
+        this.animStart = this.offsetY - this.container.nativeElement.offsetTop;
+        this.container.nativeElement.addEventListener("animationend", this.comeInAnimation);
+        this.animclass="animin"
+      }, 15);
+
+    }
   }
 
 }
