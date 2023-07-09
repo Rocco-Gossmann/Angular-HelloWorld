@@ -22,6 +22,7 @@ export class TodoInputComponent implements OnChanges {
         done: false,
         tags: []
     });
+    todoManager.list = todoManager.list;
 
     this.textInput = "";
   }

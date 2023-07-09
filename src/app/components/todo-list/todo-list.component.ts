@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { TodoData, todoManager } from '../../../data/todomanager/todomanager.module';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { TodoData } from '../../../data/todomanager/todomanager.module';
 
 @Component({
   selector: 'app-todo-list',
@@ -7,27 +7,34 @@ import { TodoData, todoManager } from '../../../data/todomanager/todomanager.mod
   styleUrls: ['./todo-list.component.css'],
 })
 
-export class TodoListComponent implements OnInit {
+export class TodoListComponent implements OnInit, OnChanges {
 
   @ViewChild("todoList") listContainer: any
+  @Input("todoList") todoList?: Set<TodoData>;
 
-  todoList: Set<TodoData> = todoManager.list;
-  renderTodoList: TodoData[] =  [];
+  renderTodoList: TodoData[] = [];
 
   initRenderList() {
-    const arr = Array.from(this.todoList.values()).sort( 
-      (a:TodoData, b:TodoData) => (a.done > b.done) 
-        ? 1 
-        : (b.done > a.done) ? -1 : 0
-    );
-
-    this.renderTodoList = arr;
+    let arr: TodoData[];
+    if (!this.todoList) arr = [];
+    else {
+      arr = Array.from(this.todoList.values()).sort(
+        (a: TodoData, b: TodoData) => (a.done > b.done)
+          ? 1
+          : (b.done > a.done) ? -1 : 0
+      );
+    }
+    this.renderTodoList.splice(0, this.renderTodoList.length, ...arr);
   }
 
   onTodoDone(...args: any[]) {
     console.log("todo has been set done", args);
-    this.initRenderList(); 
+    this.initRenderList();
   }
 
-  ngOnInit()                         : void { console.log("on init"           , this.initRenderList()) }
+  ngOnInit(): void { console.log("on init", this.initRenderList()) }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("changes", changes);
+  }
 }
