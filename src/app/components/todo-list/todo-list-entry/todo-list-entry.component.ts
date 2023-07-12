@@ -34,7 +34,7 @@ export class TodoListEntryComponent {
         this.animStart = this.offsetY - this.container.nativeElement.offsetTop;
         this.container.nativeElement.addEventListener("animationend", this.comeInAnimation);
         this.animclass="animin"
-      }, 15);
+      }, 33);
 
     }
   }

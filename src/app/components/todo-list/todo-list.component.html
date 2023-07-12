@@ -1,8 +1,10 @@
-  <h4> {{ renderTodoList.length }} Todos</h4>
+<h4>
+  {{ renderTodoList.length }} Todos
+</h4>
 
-  <div #todoList>
-    <app-todo-list-entry *ngFor="let item of renderTodoList;"   [todo]="item" (onDone)="onTodoDone(item, $event)" />
-  </div>
+<input type="checkbox" (change)="reverseSort=$any($event.target)?.checked" [checked]="reverseSort" />
+newest First
 
-
-
+<div #todoListContainer>
+  <app-todo-list-entry *ngFor="let item of renderTodoList;"   [todo]="item" (onDone)="onTodoDone(item, $event)" />
+</div>
