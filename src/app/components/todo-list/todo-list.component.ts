@@ -1,4 +1,4 @@
-import { Component, DoCheck, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, DoCheck, Input, OnInit, ViewChild } from '@angular/core';
 import { TodoData } from '../../../data/todomanager/todomanager.module';
 
 @Component({

@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import key from '../key/key.module';
+
+import { db } from '../db';
+
 @NgModule({
   declarations: [],
   imports: [ CommonModule ]
@@ -13,31 +17,25 @@ export class TodoData {
   tags       : string[] = [];
 }
 
+interface TodoDataSet {
+  id: number;
+  data: string;
+  iv: string;
+}
 
 export class TodomanagerModule {
 
   list: Set<TodoData> = new Set();
 
-  constructor() {
+  constructor() { 
+    console.log("todo-manager->key", key.cryptoKey);
+    db.then( db => {
+      console.log("TodoManager db", db);
+    })
+  }
 
-    this.list.add({
-      description: "todo 1",
-      done: false,
-      tags: []
-    });
-
-    this.list.add({
-      description: "todo 2",
-      done: true,
-      tags: []
-    });
-
-    this.list.add({
-      description: "todo 3",
-      done: false,
-      tags: []
-    });
-
+  async addTodo(todo: TodoData) {
+    this.list.add(todo);
   }
 
 }
