@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import key from '../key/key.module';
 
-import { db } from '../db';
+import { db, store_tags, store_todos } from '../db';
+import PromissingIDB from '../../lib/promissingidb';
 
 @NgModule({
   declarations: [],
@@ -27,7 +28,7 @@ export class TodomanagerModule {
 
   list: Set<TodoData> = new Set();
 
-  constructor() { 
+  constructor() {
     console.log("todo-manager->key", key.cryptoKey);
     db.then( db => {
       console.log("TodoManager db", db);
@@ -42,3 +43,4 @@ export class TodomanagerModule {
 
 export const todoManager = new TodomanagerModule();
 export default todoManager;
+

@@ -3,12 +3,12 @@ export class PromissingIDBError extends Error { }
 
 export type PromissingIDBCursorDirection = "next"|"nextunique"|"prev"|"prevunique" ;
 
-export class PromissingIDBCursor<T> {
-  private cur: IDBCursorWithValue;
+export class PromissingIDBKeyCursor<T,Y> {
+
+  protected cur: IDBCursorWithValue;
 
   get key()        : IDBValidKey             { return this.cur.key }
   get primaryKey() : IDBValidKey             { return this.cur.primaryKey }
-  get value()      : T                       { return this.cur.value }
   get source()     : IDBObjectStore|IDBIndex { return this.cur.source }
   get request()    : IDBRequest              { return this.cur.request }
   get direction()  : IDBCursorDirection      { return this.cur.direction }
@@ -32,9 +32,9 @@ export class PromissingIDBCursor<T> {
   }
 
   /** Move on to the next row */
-  continue(): Promise<PromissingIDBCursor<T>|null> {
+  continue(): Promise<Y|PromissingIDBCursor<T>|null> {
     return new Promise( (resolve, reject) => {
-      this.cur.request.onsuccess = () => resolve(this.cur.request?.result ? this : null);
+      this.cur.request.onsuccess = () => resolve(this.cur.request?.result ? (this as any) : null);
       this.cur.request.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
       this.cur.continue()
     })
@@ -48,29 +48,21 @@ export class PromissingIDBCursor<T> {
     })
   }
 }
+export class PromissingIDBCursor<T> extends PromissingIDBKeyCursor<T, PromissingIDBCursor<T>> {
 
-export class PromissingIDBStore {
-  private _store: IDBObjectStore;
+  get value()      : T                       { return this.cur.value }
+  constructor(cur: IDBCursorWithValue) { super(cur); }
 
-  constructor(store: IDBObjectStore) {
-      this._store = store;
-  }
+}
 
-  /** Adds an Item into the database, should an item with a given key already exist
-  * the Promise is rejected
-  */
-  add(obj: any, key?: IDBValidKey): Promise<IDBValidKey>       {
+class PromissingIDBBase {
+  protected _subject: IDBIndex | IDBObjectStore;
+  constructor(subject: IDBIndex | IDBObjectStore) { this._subject = subject; }
+
+  /** Gets one dataset, that has the given key */
+  get(key: IDBValidKey): Promise<any|undefined>  {
     return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.add(obj, key);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
-    })
-  }
-
-  /** delete all data from the store */
-  clear(): Promise<undefined>         {
-    return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.clear();
+        const req:IDBRequest =  this._subject.get( key );
         req.onsuccess = () => resolve(req.result);
         req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
     })
@@ -80,9 +72,103 @@ export class PromissingIDBStore {
    * get the muber of elements in the store
    * @param {IDBKeyRange} [query]  - limit the elements counted by key
    */
-  count(query?: IDBKeyRange): Promise<number>            {
+  count(query?: IDBValidKey|IDBKeyRange|undefined): Promise<number>            {
     return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.count(query);
+        const req:IDBRequest =  (this._subject as IDBObjectStore).count(query);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
+    })
+  }
+
+  /** Like `get` but returns all found results, instead of only the first */
+  getAll(query?: IDBValidKey|IDBKeyRange|null|undefined, count?: number): Promise<any[]>       {
+    return new Promise( (resolve, reject) => {
+        const req:IDBRequest =  (this._subject as IDBObjectStore).getAll( query, count );
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
+    })
+  }
+
+  /** Retrieves the key of the first record matching the given key or key range in query. */
+  getKey(key: IDBKeyRange|IDBValidKey): Promise<IDBValidKey|undefined>       {
+    if(!(key instanceof IDBKeyRange))
+      key = IDBKeyRange.only(key);
+
+    return new Promise( (resolve, reject) => {
+        const req:IDBRequest =  (this._subject as IDBObjectStore).getKey(key);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
+    })
+  }
+
+  /** Like `getKey` but returns all found keys, instead of only the first */
+  getAllKeys(query?: IDBValidKey|IDBKeyRange|null|undefined, count?: number): Promise<any>       {
+    return new Promise( (resolve, reject) => {
+        const req:IDBRequest =  (this._subject as IDBObjectStore).getAllKeys( query, count );
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
+    })
+  }
+
+  /** Creates a new cursor to traverse the list of found elements */
+  openCursor<T>(query?: IDBValidKey|IDBKeyRange, direction?: PromissingIDBCursorDirection): Promise<PromissingIDBCursor<T>|null>       {
+
+    if(!(query instanceof IDBKeyRange))
+      query = IDBKeyRange.only(query);
+
+    return new Promise( (resolve, reject) => {
+        const req:IDBRequest =  (this._subject as IDBObjectStore).openCursor( query, direction);
+        req.onsuccess = () => resolve(req.result ? new PromissingIDBCursor(req.result) : null);
+        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
+    })
+  }
+
+  openKeyCursor<T>(query?: IDBValidKey|IDBKeyRange, direction?: PromissingIDBCursorDirection): Promise<PromissingIDBKeyCursor<T, PromissingIDBKeyCursor<T,any>>|null>       {
+
+    if(!(query instanceof IDBKeyRange))
+      query = IDBKeyRange.only(query);
+
+    return new Promise( (resolve, reject) => {
+        const req:IDBRequest =  (this._subject as IDBObjectStore).openKeyCursor( query, direction);
+        req.onsuccess = () => resolve(new PromissingIDBKeyCursor(req.result));
+        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
+    })
+  }
+
+}
+
+export class PromissingIDBIndex extends PromissingIDBBase {
+
+  get objectStore(): IDBObjectStore { return (this._subject as IDBIndex).objectStore; }
+  get name(): string { return (this._subject as IDBIndex).name; }
+  get unique(): boolean { return (this._subject as IDBIndex).unique; }
+  get multiEntry(): boolean { return (this._subject as IDBIndex).multiEntry; }
+  get keyPath(): string|string[] { return (this._subject as IDBIndex).keyPath; }
+
+}
+
+export class PromissingIDBStore extends PromissingIDBBase {
+
+  get autoincrement(): boolean { return (this._subject as IDBObjectStore).autoIncrement; }
+
+  index(name: string) : PromissingIDBIndex
+  { return new PromissingIDBIndex((this._subject as IDBObjectStore).index(name)); }
+
+  /** Adds an Item into the database, should an item with a given key already exist
+  * the Promise is rejected
+  */
+  add(obj: any, key?: IDBValidKey): Promise<IDBValidKey>       {
+    return new Promise( (resolve, reject) => {
+        const req:IDBRequest =  (this._subject as IDBObjectStore).add(obj, key);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
+    })
+  }
+
+  /** delete all data from the store */
+  clear(): Promise<undefined>         {
+    return new Promise( (resolve, reject) => {
+        const req:IDBRequest =  (this._subject as IDBObjectStore).clear();
         req.onsuccess = () => resolve(req.result);
         req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
     })
@@ -95,65 +181,7 @@ export class PromissingIDBStore {
       key = IDBKeyRange.only(key);
 
     return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.delete(key);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
-    })
-  }
-
-
-  /** Gets one dataset, that has the given key */
-  get(key: IDBValidKey): Promise<any|undefined>  {
-    return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.get( key );
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
-    })
-  }
-
-  /** Retrieves the key of the first record matching the given key or key range in query. */
-  getKey(key: IDBKeyRange|IDBValidKey): Promise<IDBValidKey|undefined>       {
-    if(!(key instanceof IDBKeyRange))
-      key = IDBKeyRange.only(key);
-
-    return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.getKey(key);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
-    })
-  }
-
-  /** Like `get` but returns all found results, instead of only the first */
-  getAll(query?: IDBKeyRange, count?: number): Promise<any[]>       {
-    return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.getAll( query, count );
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
-    })
-  }
-
-  /** Like `getKey` but returns all found keys, instead of only the first */
-  getAllKeys(query?: IDBKeyRange, count?: number): Promise<any>       {
-    return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.getAllKeys( query, count );
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
-    })
-  }
-
-  openCursor<T>(query?: IDBKeyRange, direction?: PromissingIDBCursorDirection): Promise<PromissingIDBCursor<T>|null>       {
-    console.warn("TODO: Research")
-    return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.openCursor( query, direction);
-        req.onsuccess = () => resolve(req.result ? new PromissingIDBCursor(req.result) : null);
-        req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
-    })
-  }
-
-  openKeyCursor(query?: IDBKeyRange, direction?: PromissingIDBCursorDirection): Promise<IDBCursor|null>       {
-    console.warn("TODO: Research")
-    return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.openKeyCursor( query, direction);
+        const req:IDBRequest =  (this._subject as IDBObjectStore).delete(key);
         req.onsuccess = () => resolve(req.result);
         req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
     })
@@ -164,7 +192,7 @@ export class PromissingIDBStore {
   */
   put(obj: any, key?: IDBValidKey):Promise<IDBValidKey> {
     return new Promise( (resolve, reject) => {
-        const req:IDBRequest =  this._store.put( obj, key);
+        const req:IDBRequest =  (this._subject as IDBObjectStore).put( obj, key);
         req.onsuccess = () => resolve(req.result);
         req.onerror = (ev) => reject((ev?.target as IDBRequest)?.error);
     })
@@ -192,9 +220,8 @@ export class PromissingIDBStoreConstructor {
         this._store.deleteIndex(indexName);
         return this;
     }
-
-
 }
+
 export class PromissingIDBConstructor {
     private db: IDBDatabase;
     private tx: IDBTransaction|null;
@@ -204,9 +231,14 @@ export class PromissingIDBConstructor {
     async createStore(storeName: string, storeOptions: IDBObjectStoreParameters|undefined): Promise<PromissingIDBStoreConstructor> {
         let me = this;
         return new Promise((resolve, reject) => {
-            const store: IDBObjectStore = this.db.createObjectStore(storeName, storeOptions);
-            const builder = new PromissingIDBStoreConstructor(store);
-            resolve(builder);
+            if(this.tx?.objectStoreNames.contains(storeName)) {
+              reject(new PromissingIDBConstructionError(`db already has a store named '${storeName}'`));
+            }
+            else {
+              const store: IDBObjectStore = this.db.createObjectStore(storeName, storeOptions);
+              const builder = new PromissingIDBStoreConstructor(store);
+              resolve(builder);
+            }
         })
     }
 
@@ -279,7 +311,7 @@ export class PromissingIDB {
             };
 
             req.onerror = (ev) => {
-                console.error(" failed to oopen db ", dbName, dbVersion, ev)
+                console.error(" failed to open db ", dbName, dbVersion, ev)
                 reject((ev?.target as IDBRequest)?.error)
             }
 
@@ -310,6 +342,5 @@ export class PromissingIDB {
     }
 
 }
-
 
 export default PromissingIDB
