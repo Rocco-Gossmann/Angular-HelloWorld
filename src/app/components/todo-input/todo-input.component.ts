@@ -17,12 +17,12 @@ export class TodoInputComponent implements OnChanges {
   onInputSubmit() {
     if(!this.textInput.trim()) return;
 
-    todoManager.list.add({
+    todoManager.addTodo({
         description: this.textInput,
         done: false,
         tags: []
     });
-    todoManager.list = todoManager.list;
+
 
     this.textInput = "";
   }
