@@ -113,7 +113,7 @@ class PromissingIDBBase {
   /** Creates a new cursor to traverse the list of found elements */
   openCursor<T>(query?: IDBValidKey|IDBKeyRange, direction?: PromissingIDBCursorDirection): Promise<PromissingIDBCursor<T>|null>       {
 
-    if(!(query instanceof IDBKeyRange))
+    if(query && !(query instanceof IDBKeyRange))
       query = IDBKeyRange.only(query);
 
     return new Promise( (resolve, reject) => {
@@ -125,7 +125,7 @@ class PromissingIDBBase {
 
   openKeyCursor<T>(query?: IDBValidKey|IDBKeyRange, direction?: PromissingIDBCursorDirection): Promise<PromissingIDBKeyCursor<T, PromissingIDBKeyCursor<T,any>>|null>       {
 
-    if(!(query instanceof IDBKeyRange))
+    if(query && !(query instanceof IDBKeyRange))
       query = IDBKeyRange.only(query);
 
     return new Promise( (resolve, reject) => {
