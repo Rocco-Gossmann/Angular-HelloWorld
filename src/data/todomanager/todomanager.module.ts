@@ -1,9 +1,10 @@
-import { EventEmitter, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import key from '../key/key.module';
 
 import { db, store_todos } from '../db';
+import { BehaviorSubject } from 'rxjs';
 
 @NgModule({
   declarations: [],
@@ -23,12 +24,14 @@ export interface TodoDataSet {
   iv: string;
 }
 
-export class TodomanagerModule extends EventEmitter<Set<TodoData>> {
+export class TodomanagerModule {
 
-  list: Set<TodoData> = new Set();
+  private _list: Set<TodoData> = new Set();
+  list$: BehaviorSubject<Set<TodoData>> = new BehaviorSubject(this._list);
+
+  updateStream() { this.list$.next(this._list); }
 
   constructor() {
-    super(true);
     console.log("todo-manager->key", key.cryptoKey);
     db.then( db => {
       db.tx(store_todos, async (tx, st) => {
@@ -36,11 +39,11 @@ export class TodomanagerModule extends EventEmitter<Set<TodoData>> {
         let cur = await st?.openCursor<TodoData>();
 
         while(cur) {
-          this.list.add(cur?.value);
+          this._list.add(cur?.value);
           cur = await cur.continue();
         }
 
-        this.emit(this.list);
+        this.updateStream();
 
       })
     })
@@ -48,8 +51,8 @@ export class TodomanagerModule extends EventEmitter<Set<TodoData>> {
 
   async addTodo(todo: TodoData) {
     (await db).tx(store_todos, (tx, st) => (st?.add(todo) as Promise<any>), "readwrite");
-    this.list.add(todo);
-    this.emit(this.list);
+    this._list.add(todo);
+    this.updateStream();
   }
 
 }

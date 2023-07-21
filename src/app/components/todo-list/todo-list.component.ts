@@ -1,5 +1,6 @@
-import { Component, DoCheck, Input, OnInit, ViewChild } from '@angular/core';
-import { TodoData } from '../../../data/todomanager/todomanager.module';
+import { ChangeDetectionStrategy, Component, DoCheck, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import todoManager, { TodoData } from '../../../data/todomanager/todomanager.module';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-list',
@@ -7,48 +8,59 @@ import { TodoData } from '../../../data/todomanager/todomanager.module';
   styleUrls: ['./todo-list.component.css'],
 })
 
-export class TodoListComponent implements OnInit, DoCheck  {
+export class TodoListComponent implements OnInit, OnDestroy {
 
   @ViewChild("todoListContainer") listContainer: any
 
+  private _todoListSub?: Subscription;
   private _todoList: TodoData[] = [];
-  @Input("todoList") set todoList(list: TodoData[]){
-    console.log("todolist input changed", list);
-    this._todoList = list;
-    this.initRenderList();
-  }
 
-  @Input("timer")   set timer(timer: number) {
-    console.log("timer changed", timer);
-  }
+  renderTodoList$ = new BehaviorSubject < TodoData[] > ([]);
 
   /** true means, neasest todo will be on top */
   reverseSort: boolean = false;
-  private _processedReverseSort: boolean|null = null;
 
-  renderTodoList: TodoData[] = [];
+  dirty = 0;
+
+  updateReverseSort(ev: Event) {
+    this.reverseSort = (ev.target as any)?.checked || false;
+    localStorage.setItem('angular_todos_reversesort', this.reverseSort ? "true" : "false");
+    this.initRenderList();
+  }
 
   initRenderList() {
-    let arr: TodoData[];
+//    console.log("called initRenderList", this.reverseSort);
+//    console.log("List to sort:");
+//    console.table(this._todoList);
 
-    const sortFNC = this.reverseSort
-      ? (a: TodoData, b: TodoData) => (a.done > b.done)
-          ? -1
-          : (b.done > a.done) ? 1 : 0
-
-      : (a: TodoData, b: TodoData) => (a.done > b.done)
-          ? 1
-          : (b.done > a.done) ? -1 : 0
-
+    let arr: TodoData[] = [...this._todoList];
 
     if (!this._todoList) arr = [];
     else {
-      if(this.reverseSort)  arr = this._todoList.sort( sortFNC ).reverse();
-      else                  arr = this._todoList.sort( sortFNC );
+      if (this.reverseSort) {
+//        console.log("reverse sort")
+        arr = arr.sort(
+          (a: TodoData, b: TodoData) => (a.done > b.done)
+            ? -1
+            : (b.done > a.done) ? 1 : 0
+        ).reverse();
+      }
+      else {
+//        console.log("normal sort")
+        arr = arr.sort(
+          (a: TodoData, b: TodoData) => (a.done > b.done)
+            ? 1
+            : (b.done > a.done) ? -1 : 0
+        );
+      }
     }
-    this.renderTodoList.splice(0, this.renderTodoList.length, ...arr);
 
+ //   console.log("next list", arr === this._todoList);
+ //   console.table(arr);
+    this.renderTodoList$.next(arr);
   }
+
+  prnt(...msg: any[]) { console.log.apply(null, msg) }
 
   onTodoDone(...args: any[]) {
     console.log("todo has been set done", args);
@@ -56,18 +68,18 @@ export class TodoListComponent implements OnInit, DoCheck  {
   }
 
   ngOnInit(): void {
-    this.reverseSort = localStorage.getItem("angular_todos_reversesort") === "true" ;
-    this._processedReverseSort = this.reverseSort;
-    console.log("on init", this.initRenderList())
+
+    this.reverseSort = localStorage.getItem("angular_todos_reversesort") === "true";
+
+    this._todoListSub = todoManager.list$.subscribe((list: Set<TodoData>) => {
+      this._todoList = Array.from(list.values());
+      this.initRenderList();
+    });
+
+    window.setTimeout( () => this.initRenderList(), 30 )
   }
 
-
-  ngDoCheck(): void {
-    console.log("ngDoCheck");
-    if(this._processedReverseSort !== this.reverseSort) {
-      localStorage.setItem("angular_todos_reversesort", this.reverseSort ? "true" : "false");
-      this._processedReverseSort = this.reverseSort;
-      this.initRenderList()
-    }
+  ngOnDestroy() {
+    this._todoListSub?.unsubscribe()
   }
 }
