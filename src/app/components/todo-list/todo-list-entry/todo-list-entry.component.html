@@ -2,6 +2,9 @@
   [ngClass]="{'done': todo?.done}"
   [ngStyle]="{'--anim-offset-y': animStart + 'px'}"
 >
+
+  {{ rndr("render", this.todo?.description, animStart) }}
+
   <input type="checkbox" (change)="toggleDone()" [checked]="todo?.done" />
    {{todo?.description}}
 </article>

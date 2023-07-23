@@ -9,13 +9,14 @@ ARTICLE.done {
 }
 
 @keyframes comein {
+  from { transform: translateY(var(--anim-offset-y)) }
   to { transform: translateY(0px); }
 }
 
 
 .animin {
   transform: translateY(var(--anim-offset-y));
-  animation: .33s ease-in-out comein forwards;
+  animation: 5s ease-in-out comein forwards;
 }
 
 .animout {
