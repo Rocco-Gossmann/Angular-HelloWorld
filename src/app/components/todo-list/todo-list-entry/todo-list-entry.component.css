@@ -16,7 +16,7 @@ ARTICLE.done {
 
 .animin {
   transform: translateY(var(--anim-offset-y));
-  animation: 5s ease-in-out comein forwards;
+  animation: .33s ease-in-out comein forwards;
 }
 
 .animout {
